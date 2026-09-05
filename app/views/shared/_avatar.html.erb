@@ -8,5 +8,5 @@
         class: "#{box} rounded-full object-cover ring-1 ring-stone-900/15",
         alt: "#{user.display_name}'s avatar" %>
 <% else %>
-  <span class="#{box} rounded-full bg-[#C4712A] text-white grid place-items-center font-bold <%= text %>"><%= user.display_name.first.upcase %></span>
+  <span class="<%= box %> rounded-full bg-[#C4712A] text-white grid place-items-center font-bold <%= text %>"><%= user.display_name.first.upcase %></span>
 <% end %>
