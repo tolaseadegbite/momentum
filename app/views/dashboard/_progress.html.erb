@@ -1,0 +1,14 @@
+<div class="flex items-center gap-4 bg-white/5 rounded-2xl p-4 ring-1 ring-white/15">
+  <div class="relative w-20 h-20 shrink-0">
+    <svg viewBox="0 0 36 36" class="w-20 h-20 -rotate-90">
+      <circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(250,247,242,.2)" stroke-width="3.5"/>
+      <circle cx="18" cy="18" r="15.5" fill="none" stroke="#C4712A" stroke-width="3.5" stroke-linecap="round"
+        stroke-dasharray="<%= progress %>, 100" />
+    </svg>
+    <span class="absolute inset-0 grid place-items-center text-[#FAF7F2] font-extrabold"><%= progress %>%</span>
+  </div>
+  <div>
+    <p class="text-[#FAF7F2] font-bold text-sm"><%= checked %> / <%= total %> complete</p>
+    <p class="text-[#E8BCB9]/80 text-xs mt-0.5"><%= progress == 100 ? "Perfect day! 🎉" : progress >= 50 ? "Halfway there 💪" : "Let’s get moving ✨" %></p>
+  </div>
+</div>

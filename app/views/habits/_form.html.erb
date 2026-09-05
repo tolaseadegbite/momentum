@@ -1,0 +1,55 @@
+<%= form_with model: habit, data: { turbo_frame: "_top" }, class: "space-y-4" do |f| %>
+  <% if habit.errors.any? %>
+    <div class="rounded-xl bg-rose-50 text-rose-700 text-sm p-3.5 ring-1 ring-rose-200">
+      <p class="font-bold mb-1">Please fix <%= pluralize(habit.errors.count, "error") %>:</p>
+      <ul class="list-disc ml-5"><% habit.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label :title, "Habit name", class: "label" %>
+    <%= f.text_field :title, placeholder: "e.g. Read 10 pages", class: "input", autofocus: true %>
+  </div>
+  <div>
+    <%= f.label :description, "Why does it matter? (optional)", class: "label" %>
+    <%= f.text_area :description, rows: 2, placeholder: "I want to…", class: "input" %>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :frequency, class: "label" %>
+      <%= f.select :frequency, Habit.frequencies.keys.map { |k| [k.capitalize, k] }, {}, class: "input" %>
+    </div>
+    <div>
+      <%= f.label :target_per_week, "Target / week", class: "label" %>
+      <%= f.number_field :target_per_week, min: 1, max: 7, class: "input" %>
+    </div>
+  </div>
+  <div>
+    <span class="label">Color</span>
+    <div class="flex flex-wrap gap-2">
+      <% { "ink" => "#1B1031", "caramel" => "#C4712A", "rose" => "#A34054", "sage" => "#5F6C5D", "clay" => "#B4543A", "blush" => "#E8BCB9" }.each do |c, hex| %>
+        <label class="cursor-pointer" title="<%= c %>">
+          <%= f.radio_button :color, c, class: "peer sr-only" %>
+          <span class="w-9 h-9 rounded-xl grid place-items-center text-white text-xs font-extrabold ring-1 ring-stone-200 ring-offset-2 ring-offset-white peer-checked:ring-2 peer-checked:ring-[#1B1031] peer-focus-visible:ring-2 transition" style="background:<%= hex %>"><%= c.first.upcase %></span>
+        </label>
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <span class="label">Icon</span>
+    <div class="flex flex-wrap gap-2">
+      <% Habit::ICONS.each do |ic| %>
+        <label class="cursor-pointer">
+          <%= f.radio_button :icon, ic, class: "peer sr-only" %>
+          <span class="w-10 h-10 rounded-xl grid place-items-center bg-white text-stone-600 ring-1 ring-stone-200 peer-checked:ring-2 peer-checked:ring-[#1B1031] peer-checked:bg-[#F7E3C8] peer-checked:text-[#7A3F10] peer-focus-visible:ring-2 transition"><%= habit_icon_svg(ic, "w-5 h-5") %></span>
+        </label>
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <%= f.label :reminder_time, "Daily reminder (optional)", class: "label" %>
+    <%= f.time_field :reminder_time, class: "input" %>
+  </div>
+  <div class="flex gap-2 pt-2">
+    <%= f.submit habit.persisted? ? "Save changes" : "Create habit", class: "btn-primary flex-1 cursor-pointer" %>
+  </div>
+<% end %>

@@ -1,0 +1,118 @@
+<% content_for :title, "Momentum — Build habits that stick" %>
+
+<div class="bg-[#FAF7F2] text-[#1B1031]">
+  <!-- Nav -->
+  <header class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <span class="w-9 h-9 rounded-xl bg-[#1B1031] grid place-items-center text-[#E8BCB9] font-extrabold shadow">◍</span>
+      <span class="font-extrabold text-lg tracking-tight font-display">Momentum</span>
+    </div>
+    <nav class="hidden sm:flex items-center gap-6 text-sm font-medium text-stone-500">
+      <a href="#features" class="hover:text-[#1B1031]">Features</a>
+      <a href="#how" class="hover:text-[#1B1031]">How it works</a>
+      <a href="#stats" class="hover:text-[#1B1031]">Stats</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <%= link_to "Sign in", new_session_path, class: "btn-ghost" %>
+      <%= link_to "Get started →", new_registration_path, class: "btn-primary !py-2" %>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 pt-10 pb-16 grid lg:grid-cols-2 gap-10 items-center">
+    <div>
+      <span class="inline-flex items-center gap-1.5 text-xs font-bold bg-[#F7E3C8] text-[#7A3F10] px-3 py-1.5 rounded-full ring-1 ring-[#C4712A]/30">✨ Rails 8 • Hotwire • Tailwind</span>
+      <h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mt-4 leading-[1.05]">Build habits<br>that <span class="text-[#C4712A]">actually stick.</span></h1>
+      <p class="text-stone-500 mt-4 text-lg max-w-md">One-tap check-ins, streaks, mood journaling and beautiful stats. No noise, no gamified guilt — just calm momentum.</p>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <%= link_to "Start free today →", new_registration_path, class: "btn-primary !px-6 !py-3 !text-base" %>
+        <%= link_to "Sign in", new_session_path, class: "btn-secondary !px-6 !py-3 !text-base" %>
+      </div>
+      <p class="text-xs text-stone-400 mt-3">Free forever for your first habits • No credit card • Demo: demo@momentum.dev</p>
+      <div class="flex items-center gap-4 mt-6 text-sm">
+        <div class="flex -space-x-2">
+          <span class="w-8 h-8 rounded-full bg-[#1B1031] text-[#FAF7F2] grid place-items-center text-xs font-bold ring-2 ring-white">A</span>
+          <span class="w-8 h-8 rounded-full bg-[#5F6C5D] text-white grid place-items-center text-xs font-bold ring-2 ring-white">J</span>
+          <span class="w-8 h-8 rounded-full bg-[#C4712A] text-white grid place-items-center text-xs font-bold ring-2 ring-white">M</span>
+          <span class="w-8 h-8 rounded-full bg-[#A34054] text-white grid place-items-center text-xs font-bold ring-2 ring-white">+</span>
+        </div>
+        <p class="text-stone-500"><strong class="text-[#1B1031]">2,400+ check-ins</strong> logged this week</p>
+      </div>
+    </div>
+
+    <!-- Product mock -->
+    <div class="relative">
+      <div class="absolute -inset-4 bg-[#E8BCB9] rounded-[2rem] blur-2xl opacity-50"></div>
+      <div class="relative card !p-5 shadow-2xl">
+        <div class="rounded-2xl bg-[#1B1031] p-5 text-[#FAF7F2]">
+          <p class="text-xs text-[#E8BCB9]">Tuesday, today</p>
+          <p class="font-display font-bold text-xl mt-0.5">Good morning, Ada 👋</p>
+          <div class="mt-3 flex items-center gap-3 bg-white/5 rounded-xl p-3 ring-1 ring-white/15">
+            <span class="text-2xl font-extrabold">75%</span>
+            <span class="text-sm text-[#E8BCB9]/80">3 of 4 habits done.<br>One more to a perfect day 🎉</span>
+          </div>
+        </div>
+        <div class="space-y-2.5 mt-4">
+          <div class="flex items-center gap-3 rounded-xl ring-1 ring-stone-900/10 p-3">
+            <span class="w-10 h-10 rounded-xl bg-[#1B1031] text-[#FAF7F2] grid place-items-center font-bold">📖</span>
+            <div class="flex-1"><p class="text-sm font-bold">Read 10 pages</p><p class="text-xs text-stone-400">🔥 12 days • 87% / 30d</p></div>
+            <span class="text-xs font-bold bg-[#5F6C5D] text-white px-3 py-1.5 rounded-lg">✓ Done</span>
+          </div>
+          <div class="flex items-center gap-3 rounded-xl ring-1 ring-stone-900/10 p-3">
+            <span class="w-10 h-10 rounded-xl bg-[#E2E8DF] text-[#37402F] grid place-items-center font-bold">🌿</span>
+            <div class="flex-1"><p class="text-sm font-bold">Morning walk</p><p class="text-xs text-stone-400">✨ 5 days • 72% / 30d</p></div>
+            <span class="text-xs font-bold bg-[#1B1031] text-[#FAF7F2] px-3 py-1.5 rounded-lg">Check in</span>
+          </div>
+          <div class="flex items-center gap-3 rounded-xl ring-1 ring-stone-900/10 p-3 opacity-80">
+            <span class="w-10 h-10 rounded-xl bg-[#F7E3C8] grid place-items-center">💛</span>
+            <div class="flex-1"><p class="text-sm font-bold">Mood today: Good 🙂</p><p class="text-xs text-stone-400">Tap to change</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="bg-[#F3EDE2] border-y border-stone-900/10">
+    <div class="max-w-6xl mx-auto px-6 py-16">
+      <h2 class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-center">Everything you need, nothing you don’t</h2>
+      <p class="text-stone-500 text-center mt-2">Designed for consistency, backed by Rails 8 + Hotwire speed.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
+        <% [
+          ["🔥", "Streaks that motivate", "Current + longest streaks, gentle nudges when you’re about to break one."],
+          ["✅", "One-tap check-ins", "Turbo Streams update your dashboard instantly — no page reloads."],
+          ["🗓️", "GitHub-style heatmaps", "90-day view + month calendar with intensity levels."],
+          ["💛", "Mood journal", "Log 1–5 daily and spot what fuels or drains you."],
+          ["📈", "Real stats", "Per-day charts and per-habit completion rates with Chart.js."],
+          ["⏰", "Reminders + digest", "Solid Queue emails for reminders and a Monday digest."]
+        ].each do |emoji, title, desc| %>
+          <div class="card">
+            <span class="text-2xl"><%= emoji %></span>
+            <h3 class="font-bold mt-3"><%= title %></h3>
+            <p class="text-sm text-stone-500 mt-1"><%= desc %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- How -->
+  <section id="how" class="max-w-6xl mx-auto px-6 py-16">
+    <h2 class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-center">How it works</h2>
+    <div class="grid sm:grid-cols-3 gap-4 mt-10">
+      <div class="card text-center"><p class="w-10 h-10 mx-auto rounded-xl bg-[#1B1031] text-[#FAF7F2] grid place-items-center font-extrabold">1</p><h3 class="font-bold mt-3">Create a habit</h3><p class="text-sm text-stone-500 mt-1">Pick a color, icon and daily or weekly target. 30 seconds tops.</p></div>
+      <div class="card text-center"><p class="w-10 h-10 mx-auto rounded-xl bg-[#C4712A] text-white grid place-items-center font-extrabold">2</p><h3 class="font-bold mt-3">Check in daily</h3><p class="text-sm text-stone-500 mt-1">One tap on Today. Works great on mobile — installable PWA.</p></div>
+      <div class="card text-center"><p class="w-10 h-10 mx-auto rounded-xl bg-[#A34054] text-white grid place-items-center font-extrabold">3</p><h3 class="font-bold mt-3">Watch momentum grow</h3><p class="text-sm text-stone-500 mt-1">Streaks, calendar and stats keep you honest and motivated.</p></div>
+    </div>
+    <div class="text-center mt-10">
+      <%= link_to "Create your free account →", new_registration_path, class: "btn-primary !px-8 !py-3.5 !text-base" %>
+    </div>
+  </section>
+
+  <footer class="border-t border-stone-900/10">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-stone-400">
+      <p>◍ Momentum — built with Rails 8, Tailwind, Hotwire + Solid Queue.</p>
+      <p><%= link_to "Sign in", new_session_path, class: "hover:text-[#1B1031]" %> • <%= link_to "Get started", new_registration_path, class: "hover:text-[#1B1031]" %></p>
+    </div>
+  </footer>
+</div>

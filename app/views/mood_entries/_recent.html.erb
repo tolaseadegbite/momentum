@@ -1,0 +1,9 @@
+<% if entries.any? %>
+  <div class="flex gap-1.5">
+    <% entries.each do |m| %>
+      <span title="<%= m.logged_on.strftime('%b %-d') %>: <%= m.label %>" class="w-9 h-9 rounded-xl grid place-items-center text-lg bg-[#FAF7F2] ring-1 ring-stone-900/10"><%= m.emoji %></span>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-sm text-stone-500">Log your mood to spot patterns.</p>
+<% end %>

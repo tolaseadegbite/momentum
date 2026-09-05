@@ -1,0 +1,43 @@
+<% content_for :title, "Stats — Momentum" %>
+<div class="space-y-6">
+  <div>
+    <h1 class="text-2xl font-bold tracking-tight font-display">Your progress 📈</h1>
+    <p class="text-sm text-stone-500 mt-1">Last <%= @days %> days at a glance.</p>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="card text-center"><p class="text-3xl font-extrabold font-display"><%= @total_checkins %></p><p class="text-xs font-semibold text-stone-500 uppercase tracking-wider mt-1">Total check-ins</p></div>
+    <div class="card text-center"><p class="text-3xl font-extrabold font-display"><%= @completion30 %>%</p><p class="text-xs font-semibold text-stone-500 uppercase tracking-wider mt-1">30-day completion</p></div>
+    <div class="card text-center"><p class="text-3xl font-extrabold font-display"><%= @best_streak %> 🔥</p><p class="text-xs font-semibold text-stone-500 uppercase tracking-wider mt-1">Best streak</p></div>
+    <div class="card text-center"><p class="text-3xl font-extrabold font-display"><%= @avg_mood || "–" %></p><p class="text-xs font-semibold text-stone-500 uppercase tracking-wider mt-1">Avg mood (1–5)</p></div>
+  </div>
+  <div class="grid lg:grid-cols-2 gap-4">
+    <div class="card">
+      <h2 class="font-bold mb-1">Check-ins per day</h2>
+      <p class="text-xs text-stone-500 mb-4">Last <%= @days %> days</p>
+      <div class="h-56"><canvas data-controller="chart" data-chart-type-value="line" data-chart-label-value="Check-ins" data-chart-labels-value="<%= @per_day.map(&:first).to_json %>" data-chart-data-value="<%= @per_day.map(&:last).to_json %>"></canvas></div>
+    </div>
+    <div class="card">
+      <h2 class="font-bold mb-1">Completion by habit</h2>
+      <p class="text-xs text-stone-500 mb-4">30-day rate %</p>
+      <% if @per_habit.any? %>
+        <div class="h-56"><canvas data-controller="chart" data-chart-type-value="bar" data-chart-label-value="Completion %" data-chart-labels-value="<%= @per_habit.map(&:first).to_json %>" data-chart-data-value="<%= @per_habit.map(&:last).to_json %>"></canvas></div>
+      <% else %>
+        <p class="text-sm text-stone-500">Create a habit to see stats.</p>
+      <% end %>
+    </div>
+  </div>
+  <div class="card">
+    <h2 class="font-bold mb-3">All habits</h2>
+    <div class="divide-y divide-stone-900/5">
+      <% @habits.each do |h| %>
+        <div class="py-3 flex items-center gap-3">
+          <span class="w-9 h-9 rounded-lg grid place-items-center <%= habit_color(h, :badge) %>"><%= habit_icon_svg(h.icon, "w-4 h-4") %></span>
+          <%= link_to h.title, h, class: "font-semibold text-sm flex-1 hover:text-[#A85A1D]" %>
+          <span class="text-xs text-stone-500"><%= h.completion_rate(days: 30) %>%</span>
+          <div class="w-32 h-2 rounded-full bg-stone-900/10 overflow-hidden"><div class="h-full rounded-full <%= habit_color(h, :bar) %>" style="width:<%= h.completion_rate(days: 30) %>%"></div></div>
+          <%= streak_badge(h.streak) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

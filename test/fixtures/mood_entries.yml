@@ -1,0 +1,11 @@
+today_one:
+  user: one
+  mood: 4
+  note: Feeling good
+  logged_on: <%= Date.current %>
+
+yesterday_one:
+  user: one
+  mood: 3
+  note: Okay day
+  logged_on: <%= Date.current - 1.day %>

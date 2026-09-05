@@ -1,0 +1,22 @@
+<%# `update` (not `replace`) keeps the #flash container itself alive so every
+    subsequent uncheck still finds its toast target. %>
+<%= turbo_stream.update "flash" do %>
+  <%= render "shared/flash" %>
+<% end %>
+
+<%= turbo_stream.replace "habits_list" do %>
+  <div id="habits_list" class="space-y-3">
+    <% week_days = (@today.beginning_of_week(Current.user.week_start_symbol)..@today.end_of_week(Current.user.week_start_symbol)).to_a %>
+    <% @habits.each do |habit| %>
+      <% cache [ habit, @today, habit.completed_on?(@today), habit.updated_at ] do %>
+        <%= render "habits/card", habit: habit, date: @today, week_days: week_days, checked: habit.completed_on?(@today) %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= turbo_stream.replace "progress_ring" do %>
+  <div id="progress_ring" class="shrink-0">
+    <%= render "dashboard/progress", progress: @progress, checked: @checked_count, total: @total_count %>
+  </div>
+<% end %>

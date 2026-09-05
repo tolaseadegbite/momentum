@@ -1,0 +1,40 @@
+<div class="flex items-center justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold tracking-tight font-display">Your habits</h1>
+    <p class="text-sm text-stone-500 mt-1"><%= @active.size %> active • <%= @archived.size %> archived</p>
+  </div>
+  <%= link_to "＋ New habit", new_habit_path, data: { turbo_frame: "modal" }, class: "btn-primary" %>
+</div>
+
+<% if @active.any? %>
+  <div class="space-y-3 mb-10">
+    <% @active.each do |h| %>
+      <div class="card !p-4 flex items-center gap-4">
+        <span class="w-11 h-11 rounded-xl grid place-items-center <%= habit_color(h, :badge) %>"><%= habit_icon_svg(h.icon) %></span>
+        <div class="flex-1 min-w-0">
+          <%= link_to h.title, h, class: "font-bold hover:text-[#A85A1D]" %>
+          <p class="text-xs text-stone-500 mt-0.5"><%= h.description&.truncate(80) || "#{h.frequency} • #{h.completion_rate(days: 30)}% / 30d" %></p>
+        </div>
+        <%= streak_badge(h.streak) %>
+        <%= link_to "Open →", h, class: "btn-secondary !py-2 text-xs" %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="card text-center py-10 mb-8">
+    <p class="font-bold">No active habits</p>
+    <p class="text-sm text-stone-500 mt-1">Create one to get started.</p>
+  </div>
+<% end %>
+
+<% if @archived.any? %>
+  <h2 class="font-bold text-sm text-stone-500 uppercase tracking-wider mb-3">Archived</h2>
+  <div class="space-y-2 opacity-70">
+    <% @archived.each do |h| %>
+      <div class="card !p-3 flex items-center gap-3">
+        <p class="text-sm font-medium flex-1"><%= h.title %></p>
+        <%= button_to "Restore", unarchive_habit_path(h), method: :patch, class: "btn-ghost text-sm" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+<div class="min-h-screen flex items-center justify-center p-6 bg-[#FAF7F2]">
+  <div class="card max-w-md w-full">
+    <h1 class="font-bold text-xl font-display">Forgot password?</h1>
+    <p class="text-sm text-stone-500 mt-1 mb-4">We’ll email you reset instructions.</p>
+    <%= form_with url: passwords_path, class: "space-y-4" do |f| %>
+      <%= f.email_field :email_address, required: true, autofocus: true, placeholder: "you@example.com", class: "input" %>
+      <%= f.submit "Send reset email", class: "btn-primary w-full cursor-pointer" %>
+    <% end %>
+    <p class="text-sm text-center mt-4"><%= link_to "Back to sign in", new_session_path, class: "font-semibold text-[#A85A1D]" %></p>
+  </div>
+</div>

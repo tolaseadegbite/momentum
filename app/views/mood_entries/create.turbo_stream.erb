@@ -1,0 +1,16 @@
+<%# `update` keeps each page's own #mood_widget wrapper (dashboard styles it as
+    a card, the index styles the outer card) and swaps only its contents. %>
+<%= turbo_stream.update "mood_widget" do %>
+  <%= render "mood_entries/widget", entry: @entry %>
+<% end %>
+<%= turbo_stream.update "mood_history" do %>
+  <%= render "mood_entries/history", entries: @entries %>
+<% end %>
+<%= turbo_stream.update "recent_moods" do %>
+  <%= render "mood_entries/recent", entries: @recent_moods %>
+<% end %>
+<%# `update` (not `replace`) keeps the #flash container itself alive so every
+    subsequent mood tap still finds its toast target. %>
+<%= turbo_stream.update "flash" do %>
+  <%= render "shared/flash" %>
+<% end %>

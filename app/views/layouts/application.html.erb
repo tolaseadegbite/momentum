@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="h-full">
+  <head>
+    <title><%= content_for(:title) || "Momentum — Build habits that stick" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Momentum is a delightful habit tracker with streaks, mood journaling and beautiful stats.">
+    <meta name="theme-color" content="#1B1031">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="h-full bg-[#FAF7F2] text-[#1B1031] font-sans antialiased">
+    <div id="flash"><%= render "shared/flash" %></div>
+    <% if authenticated? %>
+      <div class="min-h-screen lg:flex">
+        <%= render "shared/sidebar" %>
+        <div class="flex-1 min-w-0">
+          <%= render "shared/topbar" %>
+          <main class="px-4 sm:px-6 lg:px-10 pb-16 pt-6 max-w-6xl mx-auto w-full">
+            <%= yield %>
+          </main>
+        </div>
+      </div>
+    <% else %>
+      <main class="min-h-screen">
+        <%= yield %>
+      </main>
+    <% end %>
+    <%= turbo_frame_tag "modal" %>
+  </body>
+</html>

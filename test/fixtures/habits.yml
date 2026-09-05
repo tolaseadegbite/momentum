@@ -1,0 +1,33 @@
+one:
+  user: one
+  title: Read 10 pages
+  description: Feed my mind
+  color: ink
+  frequency: 0
+  target_per_week: 7
+  active: true
+  position: 0
+  icon: book
+
+two:
+  user: one
+  title: Morning walk
+  description: 20 min outside
+  color: sage
+  frequency: 0
+  target_per_week: 7
+  active: true
+  position: 1
+  icon: leaf
+
+archived_one:
+  user: one
+  title: Old habit
+  description: Archived
+  color: rose
+  frequency: 0
+  target_per_week: 7
+  active: false
+  position: 2
+  archived_at: <%= 5.days.ago %>
+  icon: flame

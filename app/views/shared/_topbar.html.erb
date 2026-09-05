@@ -1,0 +1,24 @@
+<header class="lg:hidden sticky top-0 z-40 bg-[#FAF7F2]/90 backdrop-blur border-b border-stone-900/10 px-4 py-3 flex items-center justify-between">
+  <%= link_to dashboard_path, class: "flex items-center gap-2" do %>
+    <span class="w-8 h-8 rounded-xl bg-[#1B1031] grid place-items-center text-[#E8BCB9] font-extrabold shadow">◍</span>
+    <span class="font-extrabold tracking-tight font-display">Momentum</span>
+  <% end %>
+  <div data-controller="dropdown" class="relative">
+    <button data-action="click->dropdown#toggle" class="btn-secondary !py-2">Menu</button>
+    <div data-dropdown-target="menu" class="hidden absolute right-0 mt-2 w-48 card !p-2 space-y-1 z-50">
+      <%= link_to "Today", dashboard_path, class: "nav-link" %>
+      <%= link_to "Habits", habits_path, class: "nav-link" %>
+      <%= link_to "Calendar", calendar_path, class: "nav-link" %>
+      <%= link_to "Stats", stats_path, class: "nav-link" %>
+      <%= link_to "Moods", mood_entries_path, class: "nav-link" %>
+      <%= link_to "Settings", settings_path, class: "nav-link" %>
+      <%= button_to "Sign out", session_path, method: :delete, class: "nav-link w-full text-left" %>
+    </div>
+  </div>
+</header>
+<div class="hidden lg:block sticky top-0 z-30 bg-[#FAF7F2]/85 backdrop-blur border-b border-stone-900/10">
+  <div class="max-w-6xl mx-auto px-6 lg:px-10 py-3 flex items-center justify-between">
+    <p class="text-sm text-stone-500"><%= Date.current.strftime("%A, %B %-d") %></p>
+    <%= link_to "＋ New habit", new_habit_path, data: { turbo_frame: "modal" }, class: "btn-primary !py-2" %>
+  </div>
+</div>

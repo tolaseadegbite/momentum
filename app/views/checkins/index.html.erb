@@ -1,0 +1,15 @@
+<div class="space-y-4">
+  <div>
+    <%= link_to "← Back to #{@habit.title}", habit_path(@habit), class: "text-sm font-semibold text-stone-500" %>
+    <h1 class="text-xl font-extrabold mt-2">Check-ins for <%= @habit.title %></h1>
+  </div>
+  <div class="card divide-y divide-stone-900/5">
+    <% @checkins.each do |c| %>
+      <div class="py-2.5 flex items-center gap-3 text-sm">
+        <span class="font-semibold"><%= c.occurred_on.strftime("%a, %b %-d, %Y") %></span>
+        <% if c.note.present? %><span class="text-stone-500"><%= c.note %></span><% end %>
+        <%= button_to "Remove", habit_checkin_path(@habit, c), method: :delete, class: "ml-auto text-xs text-stone-400 hover:text-[#A34054]" %>
+      </div>
+    <% end %>
+  </div>
+</div>

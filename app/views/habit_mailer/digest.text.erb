@@ -1,0 +1,7 @@
+Your week in Momentum — <%= @user.display_name %>
+
+<% @habits.each do |h| %>
+- <%= h.title %> — <%= h.streak %>-day streak, <%= h.completion_rate(days: 7) %>% this week
+<% end %>
+
+Keep going: <%= root_url %>

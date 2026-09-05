@@ -1,0 +1,51 @@
+<% content_for :title, "Calendar — Momentum" %>
+<div class="grid lg:grid-cols-[1fr_320px] gap-6 items-start">
+  <div class="card">
+    <div class="flex items-center justify-between mb-5">
+      <%= link_to "←", calendar_path(month: (@month - 1.month).strftime("%Y-%m")), class: "btn-secondary !px-3 !py-2" %>
+      <h1 class="font-bold text-lg font-display"><%= @month.strftime("%B %Y") %></h1>
+      <%= link_to "→", calendar_path(month: (@month + 1.month).strftime("%Y-%m")), class: "btn-secondary !px-3 !py-2 #{'opacity-40 pointer-events-none' if @month >= Date.current.beginning_of_month}" %>
+    </div>
+    <div class="grid grid-cols-7 gap-1.5 text-center text-xs font-bold text-stone-400 mb-2">
+      <% %w[Mon Tue Wed Thu Fri Sat Sun].each do |d| %><span><%= d %></span><% end %>
+    </div>
+    <div class="grid grid-cols-7 gap-1.5">
+      <% @days.each do |d| %>
+        <% in_month = d.month == @month.month %>
+        <% level = @intensity[d] || 0 %>
+        <% selected = d == @selected %>
+        <%= link_to calendar_path(month: @month.strftime("%Y-%m"), date: d),
+          class: "aspect-square rounded-xl grid place-items-center text-sm font-semibold transition
+          #{in_month ? '' : 'opacity-30'}
+          #{level == 0 ? 'bg-stone-900/10 text-stone-500' : level == 1 ? 'bg-[#F0D3A8] text-[#7A3F10]' : level == 2 ? 'bg-[#DCA15C] text-[#4A2A0A]' : level == 3 ? 'bg-[#C4712A] text-white' : 'bg-[#1B1031] text-[#FAF7F2]'}
+          #{selected ? 'ring-2 ring-[#1B1031] ring-offset-2 ring-offset-white' : 'hover:scale-105'}" do %>
+          <%= d.day %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="flex items-center gap-2 mt-4 text-xs text-stone-400">
+      <span>Less</span><span class="w-3 h-3 rounded bg-stone-900/10"></span><span class="w-3 h-3 rounded bg-[#F0D3A8]"></span><span class="w-3 h-3 rounded bg-[#DCA15C]"></span><span class="w-3 h-3 rounded bg-[#C4712A]"></span><span class="w-3 h-3 rounded bg-[#1B1031]"></span><span>More</span>
+    </div>
+  </div>
+  <div class="card">
+    <h2 class="font-bold"><%= @selected.strftime("%A, %b %-d") %></h2>
+    <% if @selected_mood %>
+      <p class="text-sm mt-1"><%= @selected_mood.emoji %> <strong><%= @selected_mood.label %></strong></p>
+    <% else %>
+      <p class="text-sm text-stone-400 mt-1">No mood logged.</p>
+    <% end %>
+    <div class="mt-4 space-y-2">
+      <% if @selected_checkins.any? %>
+        <% @selected_checkins.each do |c| %>
+          <div class="flex items-center gap-2 text-sm">
+            <span class="w-7 h-7 rounded-lg grid place-items-center <%= habit_color(c.habit, :badge) %>"><%= habit_icon_svg(c.habit.icon, "w-3.5 h-3.5") %></span>
+            <span class="font-medium"><%= c.habit.title %></span>
+            <span class="text-[#5F6C5D] font-bold ml-auto">✓</span>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-sm text-stone-500">No check-ins this day.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

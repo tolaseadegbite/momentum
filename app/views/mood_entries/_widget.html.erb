@@ -1,0 +1,15 @@
+<h3 class="font-bold text-sm tracking-tight mb-1">How are you feeling today?</h3>
+<p class="text-xs text-stone-500 mb-3"><%= Date.current.strftime("%A, %b %-d") %></p>
+<%= form_with model: entry, url: entry.persisted? ? mood_entry_path(entry) : mood_entries_path, method: entry.persisted? ? :patch : :post, data: { turbo_frame: "_top" } do |f| %>
+  <div class="flex gap-2 justify-between">
+    <% MoodEntry::MOODS.each do |val, meta| %>
+      <label class="cursor-pointer flex-1">
+        <%= f.radio_button :mood, val, class: "peer sr-only", onchange: "this.form.requestSubmit()" %>
+        <span title="<%= meta[:label] %>" class="text-2xl grid place-items-center w-full py-2 rounded-xl ring-1 ring-stone-200 bg-stone-50 hover:scale-105 transition peer-checked:ring-2 peer-checked:ring-[#1B1031] peer-checked:bg-[#F7E3C8]"><%= meta[:emoji] %></span>
+      </label>
+    <% end %>
+  </div>
+  <% if entry.persisted? %>
+    <p class="text-xs text-stone-500 mt-2 text-center">Today: <strong><%= entry.label %></strong> <%= entry.emoji %> — tap to change</p>
+  <% end %>
+<% end %>

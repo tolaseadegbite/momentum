@@ -1,0 +1,11 @@
+<div class="min-h-screen flex items-center justify-center p-6 bg-[#FAF7F2]">
+  <div class="card max-w-md w-full">
+    <h1 class="font-extrabold text-xl">Set a new password</h1>
+    <p class="text-sm text-stone-500 mt-1 mb-4">Choose something strong and memorable.</p>
+    <%= form_with url: password_path(params[:token]), method: :put, class: "space-y-4" do |f| %>
+      <%= f.password_field :password, required: true, placeholder: "New password", class: "input" %>
+      <%= f.password_field :password_confirmation, required: true, placeholder: "Repeat password", class: "input" %>
+      <%= f.submit "Save password", class: "btn-primary w-full cursor-pointer" %>
+    <% end %>
+  </div>
+</div>

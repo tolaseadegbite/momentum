@@ -1,0 +1,17 @@
+yesterday_one:
+  habit: one
+  user: one
+  occurred_on: <%= Date.current - 1.day %>
+  value: 1
+
+two_days_ago_one:
+  habit: one
+  user: one
+  occurred_on: <%= Date.current - 2.days %>
+  value: 1
+
+today_two:
+  habit: two
+  user: one
+  occurred_on: <%= Date.current %>
+  value: 1

@@ -1,0 +1,16 @@
+<% if entries.any? %>
+  <div class="space-y-2">
+    <% entries.each do |e| %>
+      <div class="flex items-center gap-3 py-2 border-b border-stone-900/5 last:border-0">
+        <span class="text-2xl"><%= e.emoji %></span>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-bold"><%= e.label %> <span class="font-normal text-stone-400">· <%= e.logged_on.strftime("%a, %b %-d") %></span></p>
+          <% if e.note.present? %><p class="text-sm text-stone-500 truncate"><%= e.note %></p><% end %>
+        </div>
+        <%= button_to "✕", mood_entry_path(e), method: :delete, class: "text-stone-300 hover:text-[#A34054] text-sm", form: { data: { turbo_confirm: "Delete entry?" } } %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-sm text-stone-500">No entries yet.</p>
+<% end %>

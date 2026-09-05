@@ -1,0 +1,14 @@
+<%= turbo_frame_tag "modal" do %>
+  <div data-controller="modal" data-modal-target="backdrop" data-action="click->modal#closeOnBackdrop" class="fixed inset-0 z-[90] bg-[#1B1031]/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div data-modal-target="panel" class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-start justify-between mb-4">
+        <div>
+          <h2 class="font-extrabold text-lg tracking-tight"><%= @habit.persisted? ? "Edit habit" : "New habit" %></h2>
+          <p class="text-sm text-stone-500">Small, specific habits stick best.</p>
+        </div>
+        <button data-action="click->modal#close" class="w-8 h-8 rounded-lg hover:bg-stone-900/5 grid place-items-center text-stone-500">✕</button>
+      </div>
+      <%= render "habits/form", habit: @habit %>
+    </div>
+  </div>
+<% end %>

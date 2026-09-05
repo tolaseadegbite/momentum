@@ -1,0 +1,23 @@
+<% content_for :title, "Moods — Momentum" %>
+<div class="space-y-6 max-w-3xl">
+  <div>
+    <h1 class="text-2xl font-bold tracking-tight font-display">Mood journal 💛</h1>
+    <p class="text-sm text-stone-500 mt-1">Track how you feel to spot what drains or fuels you.</p>
+  </div>
+  <div class="card">
+    <div id="mood_widget">
+      <%= render "mood_entries/widget", entry: @entry %>
+    </div>
+    <%= form_with model: @entry, url: @entry.persisted? ? mood_entry_path(@entry) : mood_entries_path, method: @entry.persisted? ? :patch : :post, class: "mt-4" do |f| %>
+      <%= f.label :note, "Note (optional)", class: "label" %>
+      <div class="flex gap-2">
+        <%= f.text_field :note, value: @entry.note, placeholder: "What’s on your mind?", class: "input flex-1" %>
+        <%= f.submit "Save", class: "btn-primary cursor-pointer" %>
+      </div>
+    <% end %>
+  </div>
+  <div id="mood_history" class="card">
+    <h2 class="font-bold mb-3">History</h2>
+    <%= render "mood_entries/history", entries: @entries %>
+  </div>
+</div>

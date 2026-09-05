@@ -1,0 +1,80 @@
+<% content_for :title, "Today — Momentum" %>
+<%= turbo_stream_from "dashboard_#{Current.user.id}" %>
+
+<div class="space-y-6" id="dashboard">
+  <!-- Hero header -->
+  <div class="rounded-2xl bg-[#1B1031] text-[#FAF7F2] relative overflow-hidden ring-1 ring-stone-900/20 shadow-[0_8px_30px_rgba(27,16,49,.25)]">
+    <div class="absolute -right-16 -top-16 w-72 h-72 rounded-full bg-[#C4712A]/20 blur-3xl"></div>
+    <div class="relative p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-6">
+      <div class="flex-1">
+        <p class="text-[#E8BCB9] text-sm font-medium"><%= @today.strftime("%A, %B %-d, %Y") %></p>
+        <h1 class="font-display text-2xl sm:text-3xl font-bold tracking-tight mt-1">Good <%= Time.current.hour < 12 ? "morning" : Time.current.hour < 18 ? "afternoon" : "evening" %>, <%= Current.user.display_name %> 👋</h1>
+        <p class="text-[#E8BCB9]/80 text-sm mt-2"><%= @checked_count %> of <%= @total_count %> habits done today. Small steps, big change.</p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <%= link_to "＋ New habit", new_habit_path, data: { turbo_frame: "modal" }, class: "inline-flex items-center rounded-xl bg-[#C4712A] text-white px-4 py-2 text-sm font-bold shadow hover:bg-[#A85A1D] transition" %>
+          <%= link_to "View stats →", stats_path, class: "inline-flex items-center rounded-xl ring-1 ring-[#FAF7F2]/30 text-[#FAF7F2] px-4 py-2 text-sm font-semibold hover:bg-white/10 transition" %>
+        </div>
+      </div>
+      <div id="progress_ring" class="shrink-0">
+        <%= render "dashboard/progress", progress: @progress, checked: @checked_count, total: @total_count %>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-[1fr_320px] gap-6 items-start">
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-bold text-lg tracking-tight">Today’s habits</h2>
+        <%= link_to "Manage →", habits_path, class: "text-sm font-semibold text-[#A85A1D] hover:text-[#7A3F10]" %>
+      </div>
+
+      <div id="habits_list" class="space-y-3">
+        <% if @habits.any? %>
+          <% @habits.each do |habit| %>
+            <% cache [ habit, @today, @checkins_map[habit.id].present?, habit.updated_at ] do %>
+              <%= render "habits/card", habit: habit, date: @today, week_days: @week_days, checked: @checkins_map[habit.id].present? %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <div class="card text-center py-12">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-[#F7E3C8] grid place-items-center text-2xl">🌱</div>
+            <h3 class="font-bold mt-4">No habits yet</h3>
+            <p class="text-sm text-stone-500 mt-1 max-w-xs mx-auto">Create your first habit — drink water, read 10 pages, walk 20 minutes. Momentum handles the streaks.</p>
+            <%= link_to "Create your first habit", new_habit_path, data: { turbo_frame: "modal" }, class: "btn-primary mt-5" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div id="mood_widget" class="card">
+        <%= render "mood_entries/widget", entry: @mood_entry %>
+      </div>
+
+      <div class="card">
+        <h3 class="font-bold text-sm tracking-tight mb-3">🏆 Longest streaks</h3>
+        <% if @streak_leaders.any? %>
+          <div class="space-y-2.5">
+            <% @streak_leaders.each do |h| %>
+              <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-lg grid place-items-center <%= habit_color(h, :badge) %>"><%= habit_icon_svg(h.icon, "w-4 h-4") %></span>
+                <p class="text-sm font-medium flex-1 truncate"><%= h.title %></p>
+                <%= streak_badge(h.streak) %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-sm text-stone-500">Check in to start a streak.</p>
+        <% end %>
+        <%= link_to "All habits →", habits_path, class: "text-sm font-semibold text-[#A85A1D] mt-3 inline-block" %>
+      </div>
+
+      <div class="card">
+        <h3 class="font-bold text-sm tracking-tight mb-2">Recent moods</h3>
+        <div id="recent_moods">
+          <%= render "mood_entries/recent", entries: @recent_moods %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
