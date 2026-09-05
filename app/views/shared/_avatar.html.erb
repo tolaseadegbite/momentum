@@ -1,0 +1,12 @@
+<%# Shared avatar: image when attached, initial-letter fallback otherwise.
+    Locals: user:, size: (:sm for 9, :md for 12). Full literal classes so
+    Tailwind picks them up. %>
+<% box = local_assigns.fetch(:size, :sm) == :md ? "w-12 h-12" : "w-9 h-9" %>
+<% text = local_assigns.fetch(:size, :sm) == :md ? "" : "text-sm" %>
+<% if user.avatar.attached? %>
+  <%= image_tag user.avatar.variant(:thumb),
+        class: "#{box} rounded-full object-cover ring-1 ring-stone-900/15",
+        alt: "#{user.display_name}'s avatar" %>
+<% else %>
+  <span class="#{box} rounded-full bg-[#C4712A] text-white grid place-items-center font-bold <%= text %>"><%= user.display_name.first.upcase %></span>
+<% end %>

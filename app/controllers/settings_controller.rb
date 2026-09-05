@@ -12,6 +12,11 @@ class SettingsController < ApplicationController
     end
   end
 
+  def destroy_avatar
+    Current.user.avatar.purge if Current.user.avatar.attached?
+    redirect_to settings_path, notice: "Avatar removed.", status: :see_other
+  end
+
   private
 
   def settings_params

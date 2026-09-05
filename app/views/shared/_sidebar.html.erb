@@ -16,7 +16,9 @@
     <p class="text-xs text-[#E8BCB9] mt-1">You’re building something great, one day at a time.</p>
   </div>
   <div class="flex items-center gap-3 px-2">
-    <span class="w-9 h-9 rounded-full bg-[#C4712A] text-white grid place-items-center font-bold text-sm"><%= Current.user.display_name.first.upcase %></span>
+    <span id="sidebar_avatar" class="contents">
+      <%= render "shared/avatar", user: Current.user, size: :sm %>
+    </span>
     <div class="min-w-0 flex-1">
       <p class="text-sm font-semibold truncate"><%= Current.user.display_name %></p>
       <p class="text-xs text-stone-500 truncate"><%= Current.user.email_address %></p>

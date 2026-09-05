@@ -134,4 +134,48 @@ class HabitsSystemTest < ApplicationSystemTestCase
       assert_text "uniq-note-123"
     end
   end
+
+  test "avatar upload previews live in settings and sidebar, persists, removes" do
+    png = Base64.decode64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==")
+    path = Rails.root.join("tmp/test-avatar.png")
+    File.binwrite(path, png)
+
+    visit root_path
+    click_on "Get started", match: :first
+    fill_in "Name", with: "Avatar Fan"
+    fill_in "Email", with: "avatar_fan@example.com"
+    fill_in "Password", with: "password123", match: :first
+    fill_in "Confirm", with: "password123"
+    click_on "Create account"
+
+    click_on "Settings"
+
+    # Picking a file previews instantly — no save yet
+    attach_file "Avatar", path.to_s
+    within("#avatar_preview") do
+      assert_selector 'img[data-preview="true"]'
+    end
+    within("#sidebar_avatar") do
+      assert_selector 'img[data-preview="true"]'
+    end
+
+    # Save persists it through the redirect (sidebar renders stored avatar)
+    click_on "Save settings"
+    assert_text "Settings saved."
+    within("#sidebar_avatar") do
+      assert_selector "img"
+      assert_no_selector 'img[data-preview="true"]'
+    end
+
+    # Remove falls back to the initial letter
+    accept_confirm do
+      click_on "Remove avatar"
+    end
+    assert_text "Avatar removed."
+    within("#sidebar_avatar") do
+      assert_text "A"
+    end
+  ensure
+    File.delete(path) if path && File.exist?(path)
+  end
 end

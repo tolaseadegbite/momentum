@@ -119,6 +119,18 @@ class HabitsFlowTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "avatar remove purges the attachment" do
+    @user.avatar.attach(
+      io: StringIO.new(Base64.decode64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==")),
+      filename: "avatar.png", content_type: "image/png"
+    )
+    assert @user.avatar.attached?
+
+    delete avatar_settings_path
+    assert_redirected_to settings_path
+    assert_not @user.reload.avatar.attached?
+  end
+
   test "requires authentication for dashboard" do
     sign_out
     get dashboard_path

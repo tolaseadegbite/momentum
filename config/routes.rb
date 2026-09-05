@@ -19,7 +19,9 @@ Rails.application.routes.draw do
   resources :mood_entries, only: %i[index create update destroy]
   get "stats" => "stats#show", as: :stats
   get "calendar" => "calendars#show", as: :calendar
-  resource :settings, only: %i[show update], controller: "settings"
+  resource :settings, only: %i[show update], controller: "settings" do
+    delete :avatar, to: "settings#destroy_avatar", on: :collection
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 

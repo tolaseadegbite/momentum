@@ -14,6 +14,7 @@ class User < ApplicationRecord
     format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :timezone, presence: true
   validates :week_start, inclusion: { in: 0..6 }
+  validate :avatar_content_type_and_size
 
   def display_name
     name.presence || email_address.split("@").first.capitalize
@@ -34,5 +35,17 @@ class User < ApplicationRecord
 
   def week_start_symbol
     week_start == 0 ? :sunday : :monday
+  end
+
+  private
+
+  def avatar_content_type_and_size
+    return unless avatar.attached?
+    unless avatar.content_type.in?(%w[image/png image/jpeg image/gif image/webp])
+      errors.add(:avatar, "must be a PNG, JPG, GIF or WebP image")
+    end
+    if avatar.byte_size > 5.megabytes
+      errors.add(:avatar, "must be smaller than 5MB")
+    end
   end
 end
